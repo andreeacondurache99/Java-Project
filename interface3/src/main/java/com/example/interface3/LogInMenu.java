@@ -18,7 +18,16 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+
+import java.io.*;
+import java.net.Socket;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class LogInMenu extends Application {
+
+    private static Client client;
+
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -37,7 +46,7 @@ public class LogInMenu extends Application {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-        Label userName = new Label("User Name:");
+        Label userName = new Label("Email:");
         grid.add(userName, 0, 1);
 
         TextField userTextField = new TextField();
@@ -65,14 +74,38 @@ public class LogInMenu extends Application {
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
+        // Apasare buton Log In
         lgInBtn.setOnAction(new EventHandler<ActionEvent>() {
 
             @Override
             public void handle(ActionEvent e) {
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");
-                System.out.println(userTextField.getText());
-                System.out.println(pwBox.getText());
+
+
+                StringBuilder message = new StringBuilder();
+                message.append("login ");
+                message.append(userTextField.getText());
+                message.append(" ");
+                message.append(pwBox.getText());
+
+
+                if(!userTextField.getText().isEmpty() && !pwBox.getText().isEmpty()){
+                    if(Client.isValidEmail(userTextField.getText())){
+                    try {
+                        client.getBufferedWriter().write(String.valueOf(message));
+                        client.getBufferedWriter().newLine();
+                        client.getBufferedWriter().flush();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }}
+                    else{
+                        actiontarget.setFill(Color.FIREBRICK);
+                        actiontarget.setText("Email adress is not valid");
+                    }
+                }
+                else{
+                    actiontarget.setFill(Color.FIREBRICK);
+                    actiontarget.setText("Do it again");
+                }
             }
         });
 
@@ -81,9 +114,7 @@ public class LogInMenu extends Application {
             @Override
             public void handle(ActionEvent e) {
                 actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign up button pressed");
-                System.out.println(userTextField.getText());
-                System.out.println(pwBox.getText());
+                System.out.println("Text: " + userTextField.getText() + pwBox.getText());
                 SignUpMenu sum = new SignUpMenu();
                 try {
                     sum.start(stage);
@@ -96,7 +127,33 @@ public class LogInMenu extends Application {
         stage.show();
     }
 
-    public static void main(String[] args) {
+
+    public LogInMenu() {
+    }
+
+    public LogInMenu(Client client){
+        this.client=client;
+    }
+
+    public LogInMenu(PrintWriter out, BufferedReader in) {
+     //   this.out = out;
+      //  this.in = in;
+    }
+
+    public LogInMenu(Socket socket) throws IOException {
+       // this.mySocket = socket;
+        //System.out.println(mySocket.toString());
+        //out = new PrintWriter(mySocket.getOutputStream(), true);
+        //in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
+    }
+
+    @Override
+    public void init() throws Exception {
+        super.init();
+    }
+
+    public void dewIt() throws Exception {
         launch();
+        //start();
     }
 }

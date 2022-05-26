@@ -19,10 +19,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class SignUpMenu extends Application {
+
+    private static Client client;
+
     @Override
     public void start(Stage stage) throws Exception {
 
-        stage.setTitle("Log In");
+        stage.setTitle("Sign Up");
 
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
@@ -55,6 +58,12 @@ public class SignUpMenu extends Application {
         PasswordField pwBox2 = new PasswordField();
         grid.add(pwBox2, 1, 3);
 
+        Button backLogIn = new Button("<- Log In");
+        HBox SBox = new HBox(10);
+        SBox.setAlignment(Pos.BOTTOM_LEFT);
+        SBox.getChildren().add(backLogIn);
+        grid.add(SBox, 0, 4);
+
         Button btn = new Button("Sign up");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
@@ -64,17 +73,64 @@ public class SignUpMenu extends Application {
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
+        // SIGN UP BUTTON PRESSED
         btn.setOnAction(new EventHandler<ActionEvent>() {
-
             @Override
             public void handle(ActionEvent e) {
                 actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");
-                System.out.println(userTextField.getText());
-                System.out.println(pwBox.getText());
+                actiontarget.setText("Sign UP button pressed");
+
+                StringBuilder message = new StringBuilder();
+                message.append("register ");
+                message.append(userTextField.getText());
+                message.append(" ");
+                message.append(pwBox.getText());
+
+                System.out.println("Text: " + userTextField.getText() + pwBox.getText() + pwBox2.getText());
+
+                if (!userTextField.getText().isEmpty() && !pwBox.getText().isEmpty() && !pwBox2.getText().isEmpty()) {
+                    if (!pwBox.getText().equals(pwBox2.getText())) {
+                        actiontarget.setFill(Color.FIREBRICK);
+                        actiontarget.setText("Passwords are not alike");
+                    } else if(Client.isValidEmail(userTextField.getText())) {
+
+                        System.out.println("Verificam in baza de date daca e ok");
+                        try {
+                            client.getBufferedWriter().write(String.valueOf(message));
+                            client.getBufferedWriter().newLine();
+                            client.getBufferedWriter().flush();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                    else{
+                        actiontarget.setFill(Color.FIREBRICK);
+                        actiontarget.setText("Email adress is not valid");
+                    }
+                }
+            }
+        });
+
+        backLogIn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                LogInMenu ln = new LogInMenu();
+                try {
+                    ln.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
         stage.show();
     }
+
+    public SignUpMenu() {
+    }
+
+    public SignUpMenu(Client client) {
+        this.client=client;
+    }
+
 }
