@@ -101,13 +101,13 @@ class ClientThread extends Thread {
 
         String email = commandParam[1];
         String rawPassword = commandParam[2];
-
-        if(ServerFunctions.alreadyExistingUser(email)){
-            String password = ServerFunctions.bytesToHex(ServerFunctions.hashing(rawPassword));
-
-            System.out.println( ServerFunctions.verifyCredentials(email, password));
-        }
         return false;
+//        if(ServerFunctions.alreadyExistingUser(email)){
+//            String password = ServerFunctions.bytesToHex(ServerFunctions.hashing(rawPassword));
+//
+//            System.out.println( ServerFunctions.verifyCredentials(email, password));
+//        }
+//        return false;
 
 //        String answer;
 //        String[] commandParam = request.split(" "); //contains register, name

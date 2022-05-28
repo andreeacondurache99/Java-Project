@@ -70,6 +70,10 @@ public class SignUpMenu extends Application {
         hbBtn.getChildren().add(btn);
         grid.add(hbBtn, 1, 4);
 
+        Text Rule1 = new Text("Password must contain:");
+        Rule1.setFont(Font.font("Tahoma", FontWeight.NORMAL, 14));
+        grid.add(Rule1, 0, 5);
+
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
@@ -78,7 +82,7 @@ public class SignUpMenu extends Application {
             @Override
             public void handle(ActionEvent e) {
                 actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign UP button pressed");
+               // actiontarget.setText("Sign UP button pressed");
 
                 StringBuilder message = new StringBuilder();
                 message.append("register ");

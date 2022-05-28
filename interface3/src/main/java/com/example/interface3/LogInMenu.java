@@ -71,6 +71,8 @@ public class LogInMenu extends Application {
         hbBtn.getChildren().add(lgInBtn);
         grid.add(hbBtn, 1, 4);
 
+
+
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
