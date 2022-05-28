@@ -24,7 +24,7 @@ public class Client {
             this.socket = socket;
             //this.username = username;
             this.bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            this.bufferedWriter= new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            this.bufferedWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         } catch (IOException e) {
             // Gracefully close everything.
             closeEverything(socket, bufferedReader, bufferedWriter);
@@ -153,7 +153,7 @@ public class Client {
         var emailAddress = "username@domain.com";
         var regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-       // EmailValidation.patternMatches(emailAddress, regexPattern)
+        // EmailValidation.patternMatches(emailAddress, regexPattern)
         System.out.println("2nd phase");
 
         String serverAddress = "127.0.0.1";
@@ -167,7 +167,7 @@ public class Client {
         //client.sendMessage();
     }
 
-    public static boolean isValidEmail(String email){
+    public static boolean isValidEmail(String email) {
         String regex = "^(.+)@(.+)$";
         //Compile regular expression to get the pattern
         Pattern pattern = Pattern.compile(regex);

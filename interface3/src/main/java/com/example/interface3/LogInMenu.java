@@ -72,7 +72,6 @@ public class LogInMenu extends Application {
         grid.add(hbBtn, 1, 4);
 
 
-
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
 
@@ -90,21 +89,20 @@ public class LogInMenu extends Application {
                 message.append(pwBox.getText());
 
 
-                if(!userTextField.getText().isEmpty() && !pwBox.getText().isEmpty()){
-                    if(Client.isValidEmail(userTextField.getText())){
-                    try {
-                        client.getBufferedWriter().write(String.valueOf(message));
-                        client.getBufferedWriter().newLine();
-                        client.getBufferedWriter().flush();
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }}
-                    else{
+                if (!userTextField.getText().isEmpty() && !pwBox.getText().isEmpty()) {
+                    if (Client.isValidEmail(userTextField.getText())) {
+                        try {
+                            client.getBufferedWriter().write(String.valueOf(message));
+                            client.getBufferedWriter().newLine();
+                            client.getBufferedWriter().flush();
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    } else {
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Email adress is not valid");
                     }
-                }
-                else{
+                } else {
                     actiontarget.setFill(Color.FIREBRICK);
                     actiontarget.setText("Do it again");
                 }
@@ -133,17 +131,17 @@ public class LogInMenu extends Application {
     public LogInMenu() {
     }
 
-    public LogInMenu(Client client){
-        this.client=client;
+    public LogInMenu(Client client) {
+        this.client = client;
     }
 
     public LogInMenu(PrintWriter out, BufferedReader in) {
-     //   this.out = out;
-      //  this.in = in;
+        //   this.out = out;
+        //  this.in = in;
     }
 
     public LogInMenu(Socket socket) throws IOException {
-       // this.mySocket = socket;
+        // this.mySocket = socket;
         //System.out.println(mySocket.toString());
         //out = new PrintWriter(mySocket.getOutputStream(), true);
         //in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
