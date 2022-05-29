@@ -81,7 +81,6 @@ public class LogInMenu extends Application {
             @Override
             public void handle(ActionEvent e) {
 
-
                 StringBuilder message = new StringBuilder();
                 message.append("login ");
                 message.append(userTextField.getText());
