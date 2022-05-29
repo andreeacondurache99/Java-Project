@@ -50,9 +50,9 @@ class ClientThread extends Thread {
                     //login name: establishes a connection between the server and the client;
                     boolean valid = login(request);
                     //if(valid){
-                        out.write(String.valueOf(valid));
-                        out.newLine();
-                    out.flush();
+                       // out.write(String.valueOf(valid));
+                        //out.newLine();
+                    //out.flush();
                     //}
                 } else if (request.equals("exit")) {
                     closeClient();
