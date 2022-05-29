@@ -48,7 +48,12 @@ class ClientThread extends Thread {
                     register(request);
                 } else if (request.startsWith("login")) {
                     //login name: establishes a connection between the server and the client;
-                    login(request);
+                    boolean valid = login(request);
+                    //if(valid){
+                        out.write(String.valueOf(valid));
+                        out.newLine();
+                    out.flush();
+                    //}
                 } else if (request.equals("exit")) {
                     closeClient();
                 } else System.out.println("Incorrect command!");
@@ -101,13 +106,12 @@ class ClientThread extends Thread {
 
         String email = commandParam[1];
         String rawPassword = commandParam[2];
+
+        if(DatabaseFunctions.alreadyExistingUser(email)){
+            System.out.println( DatabaseFunctions.verifyCredentials(email, rawPassword));
+            loggedIn = true;
+        }
         return false;
-//        if(ServerFunctions.alreadyExistingUser(email)){
-//            String password = ServerFunctions.bytesToHex(ServerFunctions.hashing(rawPassword));
-//
-//            System.out.println( ServerFunctions.verifyCredentials(email, password));
-//        }
-//        return false;
 
 //        String answer;
 //        String[] commandParam = request.split(" "); //contains register, name
