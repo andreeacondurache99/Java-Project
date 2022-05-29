@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.regex.*;
 import java.util.*;
 
-
 // A client sends messages to the server, the server spawns a thread to communicate with the client.
 // Each communication with a client is added to an array list so any message sent gets sent to every other client
 // by looping through it.
@@ -52,6 +51,16 @@ public class Client {
                 '}';
     }
 
+    public void sendMyMessage(String message) throws IOException {
+        bufferedWriter.write(message);
+        bufferedWriter.newLine();
+        bufferedWriter.flush();
+    }
+
+    public String receiveMyMessage() throws IOException {
+        return bufferedReader.readLine();
+    }
+
     public void sendMessage2(Client client) throws Exception {
         boolean running = true;
         while (running) {
@@ -60,12 +69,12 @@ public class Client {
             LogInMenu lmn = new LogInMenu(client);
             System.out.println("DASADSA");
             lmn.dewIt();
-            Scanner myObj = new Scanner(System.in);
-            request = myObj.nextLine();
-            System.out.println("REF " + request);
-            bufferedWriter.write(request);
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
+//            Scanner myObj = new Scanner(System.in);
+//            request = myObj.nextLine();
+//            System.out.println("REF " + request);
+//            bufferedWriter.write(request);
+//            bufferedWriter.newLine();
+//            bufferedWriter.flush();
         }
         String response = bufferedReader.readLine();
         if (response == null) {

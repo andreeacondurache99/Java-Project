@@ -85,6 +85,22 @@ public class DatabaseFunctions {
         return false;
     }
 
+    public static void addToDatabase(String email, String rawPassword, String firstName, String lastName)throws SQLException, NoSuchAlgorithmException {
+        Connection con = Database.getConnection();
+        try{
+            PreparedStatement pstmt = con.prepareStatement("insert into users (email, password, firstname, lastname)" + "values(?, ?, ?, ?)");
+            String password = bytesToHex(DatabaseFunctions.hashing(rawPassword));
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+            pstmt.setString(3, firstName);
+            pstmt.setString(4, lastName);
+            pstmt.executeUpdate();
+            Database.getConnection().commit();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public static void addToDatabase(String email, String rawPassword)throws SQLException, NoSuchAlgorithmException {
         Connection con = Database.getConnection();
         try{

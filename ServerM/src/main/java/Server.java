@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,9 +10,13 @@ public class Server {
     // Define the port on which the server is listening
     public static final int PORT = 8100;
     public static boolean running = true;
+    private ServerSocket serverSocket;
+    private Socket socket;
+    private BufferedReader bufferedReader;
+    private BufferedWriter bufferedWriter;
 
     public Server() throws IOException {
-        ServerSocket serverSocket = null;
+        serverSocket = null;
 
         try {
             //creation of a ServerSocket running at a specified port.

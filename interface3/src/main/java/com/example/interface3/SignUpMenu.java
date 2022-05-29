@@ -47,7 +47,7 @@ public class SignUpMenu extends Application {
 
         TextField userTextField = new TextField();
         grid.add(userTextField, 1, 1);
-//*************************************
+//************************************* |
         Label lastName = new Label("Last name:");
         grid.add(lastName, 0, 2);
 

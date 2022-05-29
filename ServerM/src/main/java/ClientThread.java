@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
@@ -12,30 +9,55 @@ import java.util.List;
 
 class ClientThread extends Thread {
 
-    private Socket socket = null;
-    private final ServerSocket serverSocket;
     private PrintWriter out;
     private boolean loggedIn = false;
     private User userLoggedIn;
 
-    public ClientThread(Socket socket, ServerSocket serverSocket) {
-        this.socket = socket;
-        this.serverSocket = serverSocket;
+    private ServerSocket serverSocket;
+    private Socket socket;
+    private BufferedReader bufferedReader;
+    private BufferedWriter bufferedWriter;
+
+    private String succesMessage = "succes";
+    private String failedMessage = "failed";
+
+    public ClientThread(Socket socket, ServerSocket serverSocket) throws IOException {
+        try {
+            this.socket = socket;
+            this.serverSocket = serverSocket;
+            bufferedReader = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+            bufferedWriter = new BufferedWriter(new OutputStreamWriter(this.socket.getOutputStream()));
+        } catch (IOException e){
+            System.out.println("Error creating client thread");
+            e.printStackTrace();
+        }
     }
+
+    private void sendMyMessage(String message) throws IOException {
+        bufferedWriter.write(message);
+        bufferedWriter.newLine();
+        bufferedWriter.flush();
+    }
+
+    private String receiveMyMessage() throws IOException {
+        return bufferedReader.readLine();
+    }
+
 
     public void run() {
         try {
             // Get the request from the input stream: client → server
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            //BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             // Send the response to the output stream: server → client
-            out = new PrintWriter(socket.getOutputStream());
+            //out = new PrintWriter(socket.getOutputStream());
 
             boolean running = true;
             socket.setSoTimeout(60000); //60 secunde
             while (running) {
 
-                String request = in.readLine(); //the request from client
+                String request = receiveMyMessage(); //the request from client
                 System.out.println("Server received the request... " + request);
+
                 if (request == null) {
                     System.out.println("The client doesn't have any other requests");
                     break;
@@ -46,14 +68,18 @@ class ClientThread extends Thread {
                 } else if (request.startsWith("register")) {
                     //register name: adds a new person to the social network;
                     register(request);
+
+
                 } else if (request.startsWith("login")) {
-                    //login name: establishes a connection between the server and the client;
+
                     boolean valid = login(request);
-                    //if(valid){
-                       // out.write(String.valueOf(valid));
-                        //out.newLine();
-                    //out.flush();
-                    //}
+                    if(valid){
+                        sendMyMessage(succesMessage);
+                    }
+                    else{
+                        sendMyMessage(failedMessage);
+                    }
+
                 } else if (request.equals("exit")) {
                     closeClient();
                 } else System.out.println("Incorrect command!");
@@ -79,24 +105,23 @@ class ClientThread extends Thread {
         }
     }
 
-    private void register(String request) {
+    private void register(String request) throws SQLException, NoSuchAlgorithmException {
 
         String[] commandParam = request.split(" "); //contains register, name
-        System.out.println(commandParam[0] +" "+ commandParam[1] +" "+ commandParam[2]);
-//        String answer;
-//        if (loggedIn)
-//            answer = "You're already connected to another account!";
-//        else {
-//            String[] commandParam = request.split(" "); //contains register, name
-//
-//            User person = new User(commandParam[1]);
-//            if (SocialNetwork.addUser(person))
-//                answer = "User " + person.getUsername() + " has been registered succesfully!";
-//
-//            else answer = "User " + person.getUsername() + " already exists!";
-//        }
-//        out.println(answer);
-//        out.flush();
+        System.out.println(commandParam[0] +" "+ commandParam[1] +" "+ commandParam[2] + " " + commandParam[3] + " " + commandParam[4]);
+
+        String email = commandParam[1];
+        String rawPassword = commandParam[2];
+        String firstName = commandParam[3];
+        String lastName = commandParam[4];
+
+        if(loggedIn || DatabaseFunctions.alreadyExistingUser(email)){
+            System.out.println("Acest email este deja folosit");
+        }
+        else{
+            DatabaseFunctions.addToDatabase(email, rawPassword, firstName, lastName);
+            System.out.println("Autentificare reusita");
+        }
     }
 
     private boolean login(String request) throws SQLException, NoSuchAlgorithmException {
@@ -108,30 +133,13 @@ class ClientThread extends Thread {
         String rawPassword = commandParam[2];
 
         if(DatabaseFunctions.alreadyExistingUser(email)){
-            System.out.println( DatabaseFunctions.verifyCredentials(email, rawPassword));
+            boolean response = DatabaseFunctions.verifyCredentials(email, rawPassword);
             loggedIn = true;
+            return response;
         }
         return false;
-
-//        String answer;
-//        String[] commandParam = request.split(" "); //contains register, name
-//
-//        User person = new User(commandParam[1]);
-//
-//        if (!SocialNetwork.existsUser(person))
-//            answer = "User doesn't exist";
-//        else if (loggedIn)
-//            answer = "User is already connected!";
-//        else {
-//            loggedIn = true;
-//            userLoggedIn = person;
-//            answer = "User " + userLoggedIn.getUsername() + " logged in succesfully!";
-//        }
-//
-//        out.println(answer);
-//        out.flush();
-
     }
+
 
     private void closeClient() throws IOException {
         System.out.println("The client disconnected!");
@@ -139,6 +147,7 @@ class ClientThread extends Thread {
         out.flush();
         socket.close();
     }
+
 
     private void stopServer() throws IOException {
         String answer = "Server Stopped!";

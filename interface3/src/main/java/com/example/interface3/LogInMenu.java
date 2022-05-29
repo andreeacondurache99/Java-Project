@@ -91,9 +91,16 @@ public class LogInMenu extends Application {
                 if (!userTextField.getText().isEmpty() && !pwBox.getText().isEmpty()) {
                     if (Client.isValidEmail(userTextField.getText())) {
                         try {
-                            client.getBufferedWriter().write(String.valueOf(message));
-                            client.getBufferedWriter().newLine();
-                            client.getBufferedWriter().flush();
+                            client.sendMyMessage(String.valueOf(message));
+                            String response = client.receiveMyMessage();
+                            if(response.equals("succes")){
+                                MainMenu mm = new MainMenu();
+                                mm.start(stage);
+                            }
+                            else{
+                                actiontarget.setFill(Color.FIREBRICK);
+                                actiontarget.setText("Email or password is wrong");
+                            }
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
