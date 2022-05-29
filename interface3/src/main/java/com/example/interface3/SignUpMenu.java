@@ -45,32 +45,32 @@ public class SignUpMenu extends Application {
         Label firstName = new Label("First name:");
         grid.add(firstName, 0, 1);
 
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
+        TextField userFirstName = new TextField();
+        grid.add(userFirstName, 1, 1);
 //************************************* |
         Label lastName = new Label("Last name:");
         grid.add(lastName, 0, 2);
 
-        TextField userTextField2 = new TextField();
-        grid.add(userTextField2, 1, 2);
+        TextField userLastName = new TextField();
+        grid.add(userLastName, 1, 2);
 //***************************
         Label email = new Label("Email:");
         grid.add(email, 0, 3);
 
-        TextField userTextField3 = new TextField();
-        grid.add(userTextField3, 1, 3);
+        TextField userEmail = new TextField();
+        grid.add(userEmail, 1, 3);
 //***************************
         Label pw = new Label("Password:");
         grid.add(pw, 0, 4);
 
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 4);
+        PasswordField password1 = new PasswordField();
+        grid.add(password1, 1, 4);
 
         Label pw2 = new Label("Password:");
         grid.add(pw2, 0, 5);
 
-        PasswordField pwBox2 = new PasswordField();
-        grid.add(pwBox2, 1, 5);
+        PasswordField password2 = new PasswordField();
+        grid.add(password2, 1, 5);
 //*******************
         Text Rule1 = new Text("Password must contain:\n" +
                 "at least 8 characters and at most 20 characters.\n" +
@@ -99,51 +99,52 @@ public class SignUpMenu extends Application {
 
         // SIGN UP BUTTON PRESSED
         btn.setOnAction(new EventHandler<ActionEvent>() {
-                            @Override
-                            public void handle(ActionEvent e) {
-                                actiontarget.setFill(Color.FIREBRICK);
-                                // actiontarget.setText("Sign UP button pressed");
+            @Override
+            public void handle(ActionEvent e) {
+                actiontarget.setFill(Color.FIREBRICK);
 
-                                StringBuilder message = new StringBuilder();
-                                message.append("register ");
-                                message.append(userTextField.getText());
-                                message.append(" ");
-                                message.append(pwBox.getText());
+                String email = userEmail.getText();
+                String password = password1.getText();
+                String passwordTest = password2.getText();
+                String firstName = userFirstName.getText();
+                String lastName = userLastName.getText();
+                String message = formMessage(email, password, firstName, lastName);
 
-                                System.out.println("Text: " + userTextField.getText() + pwBox.getText() + pwBox2.getText());
 
-                                if (!userTextField.getText().isEmpty() && !userTextField2.getText().isEmpty()
-                                        && !userTextField3.getText().isEmpty() && !pwBox.getText().isEmpty()
-                                        && !pwBox2.getText().isEmpty() && !Rule1.getText().isEmpty()) {
+                if (!email.isEmpty() && !password.isEmpty() && !firstName.isEmpty()
+                        && !lastName.isEmpty() && !passwordTest.isEmpty())
+                {
+                    if (!Client.isValidPassw(password)) {
+                        actiontarget.setFill(Color.FIREBRICK);
+                        actiontarget.setText("Passwords are not ok, check the reasons below.");
+                    }
+                    if (!password.equals(passwordTest)) {
+                        actiontarget.setFill(Color.FIREBRICK);
+                        actiontarget.setText("Passwords are not alike.");
+                    } else if (Client.isValidEmail(email)) {
 
-                                    if (!Client.isValidPassw(pwBox.getText())) {
-                                        actiontarget.setFill(Color.FIREBRICK);
-                                        actiontarget.setText("Passwords are not ok, check the reasons below.");
-                                    }
-                                    if (!pwBox.getText().equals(pwBox2.getText())) {
-                                        actiontarget.setFill(Color.FIREBRICK);
-                                        actiontarget.setText("Passwords are not alike.");
-                                    } else if (Client.isValidEmail(userTextField3.getText())) {
-
-                                        System.out.println("Verificam in baza de date daca e ok");
-                                        try {
-                                            client.getBufferedWriter().write(String.valueOf(message));
-                                            client.getBufferedWriter().newLine();
-                                            client.getBufferedWriter().flush();
-                                        } catch (Exception ex) {
-                                            ex.printStackTrace();
-                                        }
-                                    } else {
-                                        actiontarget.setFill(Color.FIREBRICK);
-                                        actiontarget.setText("Email adress is not valid");
-                                    }
-
-                                }
+                        System.out.println("Verificam in baza de date daca e ok");
+                        try {
+                            client.sendMyMessage(message);
+                            String response = client.receiveMyMessage();
+                            if(response.equals("succes")){
+                                MainMenu mm = new MainMenu();
+                                mm.start(stage);
                             }
+                            else{
+                                actiontarget.setFill(Color.FIREBRICK);
+                                actiontarget.setText("Email already used");
+                            }
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
                         }
-
-
-        );
+                    } else {
+                        actiontarget.setFill(Color.FIREBRICK);
+                        actiontarget.setText("Email adress is not valid");
+                    }
+                }
+            }
+        });
 
         backLogIn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -166,6 +167,19 @@ public class SignUpMenu extends Application {
 
     public SignUpMenu(Client client) {
         this.client = client;
+    }
+
+    private String formMessage(String userEmail, String password1, String userFirstName, String userLastName){
+        StringBuilder message = new StringBuilder();
+        message.append("register ");
+        message.append(userEmail);
+        message.append(" ");
+        message.append(password1);
+        message.append(" ");
+        message.append(userFirstName);
+        message.append(" ");
+        message.append(userLastName);
+        return String.valueOf(message);
     }
 
 }

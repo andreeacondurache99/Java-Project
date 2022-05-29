@@ -105,7 +105,7 @@ class ClientThread extends Thread {
         }
     }
 
-    private void register(String request) throws SQLException, NoSuchAlgorithmException {
+    private void register(String request) throws SQLException, NoSuchAlgorithmException, IOException {
 
         String[] commandParam = request.split(" "); //contains register, name
         System.out.println(commandParam[0] +" "+ commandParam[1] +" "+ commandParam[2] + " " + commandParam[3] + " " + commandParam[4]);
@@ -117,9 +117,11 @@ class ClientThread extends Thread {
 
         if(loggedIn || DatabaseFunctions.alreadyExistingUser(email)){
             System.out.println("Acest email este deja folosit");
+            sendMyMessage(failedMessage);
         }
         else{
             DatabaseFunctions.addToDatabase(email, rawPassword, firstName, lastName);
+            sendMyMessage(succesMessage);
             System.out.println("Autentificare reusita");
         }
     }
