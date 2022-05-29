@@ -41,7 +41,6 @@ public class SignUpMenu extends Application {
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 
-
 //****************************************
         Label firstName = new Label("First name:");
         grid.add(firstName, 0, 1);
@@ -73,12 +72,10 @@ public class SignUpMenu extends Application {
         PasswordField pwBox2 = new PasswordField();
         grid.add(pwBox2, 1, 5);
 //*******************
-
         Text Rule1 = new Text("Password must contain:\n" +
                 "at least 8 characters and at most 20 characters.\n" +
                 "at least one digit.\n" +
-                "at least one upper case alphabet.\n" +
-                "at least one lower case alphabet.\n" +
+                "at least one alphabet letter.\n" +
                 "at least one special character which includes !@#$%&*()-+=^.\n" +
                 "and it doesn’t contain any white space.");
         Rule1.setFont(Font.font("Tahoma", FontPosture.ITALIC, 9));
@@ -102,64 +99,51 @@ public class SignUpMenu extends Application {
 
         // SIGN UP BUTTON PRESSED
         btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                actiontarget.setFill(Color.FIREBRICK);
-                // actiontarget.setText("Sign UP button pressed");
+                            @Override
+                            public void handle(ActionEvent e) {
+                                actiontarget.setFill(Color.FIREBRICK);
+                                // actiontarget.setText("Sign UP button pressed");
 
-                StringBuilder message = new StringBuilder();
-                message.append("register ");
-                message.append(userTextField.getText());
-                message.append(" ");
-                message.append(pwBox.getText());
+                                StringBuilder message = new StringBuilder();
+                                message.append("register ");
+                                message.append(userTextField.getText());
+                                message.append(" ");
+                                message.append(pwBox.getText());
 
-                System.out.println("Text: " + userTextField.getText() + pwBox.getText() + pwBox2.getText());
+                                System.out.println("Text: " + userTextField.getText() + pwBox.getText() + pwBox2.getText());
 
-                if (!userTextField.getText().isEmpty() && !userTextField2.getText().isEmpty()
-                        && !userTextField3.getText().isEmpty() && !pwBox.getText().isEmpty()
-                        && !pwBox2.getText().isEmpty() && !Rule1.getText().isEmpty()) {
-                    if (!(pwBox.getText().isEmpty()) || !(pwBox.getText().length() < 8) || (pwBox.getText().length() > 20)
-                            || (pwBox.getText().contains(" ")) || (!pwBox.getText().contains("@")
-                            || !pwBox.getText().contains("#")
-                            || !pwBox.getText().contains("!") || !pwBox.getText().contains("~")
-                            || !pwBox.getText().contains("$") || !pwBox.getText().contains("%")
-                            || !pwBox.getText().contains("^") || !pwBox.getText().contains("&")
-                            || !pwBox.getText().contains("*") || !pwBox.getText().contains("(")
-                            || !pwBox.getText().contains(")") || !pwBox.getText().contains("-")
-                            || !pwBox.getText().contains("+") || !pwBox.getText().contains("/")
-                            || !pwBox.getText().contains(":") || !pwBox.getText().contains(".")
-                            || !pwBox.getText().contains(", ") || !pwBox.getText().contains("<")
-                            || !pwBox.getText().contains(">") || !pwBox.getText().contains("?")
-                            || !pwBox.getText().contains("|"))
-                            || !pwBox.getText().contains("0") || !pwBox.getText().contains("2")
-                            || !pwBox.getText().contains("3") || !pwBox.getText().contains("4")
-                            || !pwBox.getText().contains("5") || !pwBox.getText().contains("6")
-                            || !pwBox.getText().contains("7") || !pwBox.getText().contains("8")
-                            || !pwBox.getText().contains("9")) {
-                        actiontarget.setFill(Color.FIREBRICK);
-                        actiontarget.setText("Password is not valid!");
+                                if (!userTextField.getText().isEmpty() && !userTextField2.getText().isEmpty()
+                                        && !userTextField3.getText().isEmpty() && !pwBox.getText().isEmpty()
+                                        && !pwBox2.getText().isEmpty() && !Rule1.getText().isEmpty()) {
 
-                        if (!pwBox.getText().equals(pwBox2.getText())) {
-                            actiontarget.setFill(Color.FIREBRICK);
-                            actiontarget.setText("Passwords are not alike");
-                        } else if (Client.isValidEmail(userTextField3.getText())) {
+                                    if (!Client.isValidPassw(pwBox.getText())) {
+                                        actiontarget.setFill(Color.FIREBRICK);
+                                        actiontarget.setText("Passwords are not ok, check the reasons below.");
+                                    }
+                                    if (!pwBox.getText().equals(pwBox2.getText())) {
+                                        actiontarget.setFill(Color.FIREBRICK);
+                                        actiontarget.setText("Passwords are not alike.");
+                                    } else if (Client.isValidEmail(userTextField3.getText())) {
 
-                            System.out.println("Verificam in baza de date daca e ok");
-                            try {
-                                client.getBufferedWriter().write(String.valueOf(message));
-                                client.getBufferedWriter().newLine();
-                                client.getBufferedWriter().flush();
-                            } catch (Exception ex) {
-                                ex.printStackTrace();
+                                        System.out.println("Verificam in baza de date daca e ok");
+                                        try {
+                                            client.getBufferedWriter().write(String.valueOf(message));
+                                            client.getBufferedWriter().newLine();
+                                            client.getBufferedWriter().flush();
+                                        } catch (Exception ex) {
+                                            ex.printStackTrace();
+                                        }
+                                    } else {
+                                        actiontarget.setFill(Color.FIREBRICK);
+                                        actiontarget.setText("Email adress is not valid");
+                                    }
+
+                                }
                             }
-                        } else {
-                            actiontarget.setFill(Color.FIREBRICK);
-                            actiontarget.setText("Email adress is not valid");
                         }
-                    }
-                }
-            }
-        });
+
+
+        );
 
         backLogIn.setOnAction(new EventHandler<ActionEvent>() {
             @Override
