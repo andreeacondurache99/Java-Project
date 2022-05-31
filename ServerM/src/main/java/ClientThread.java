@@ -17,6 +17,10 @@ class ClientThread extends Thread {
     private Socket socket;
     private BufferedReader bufferedReader;
     private BufferedWriter bufferedWriter;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private int id;
 
     private String succesMessage = "succes";
     private String failedMessage = "failed";
@@ -74,13 +78,18 @@ class ClientThread extends Thread {
 
                     boolean valid = login(request);
                     if(valid){
+
                         sendMyMessage(succesMessage);
                     }
                     else{
                         sendMyMessage(failedMessage);
                     }
 
-                } else if (request.equals("exit")) {
+                }else if(request.equals("ProfileData")){
+                    profileProblems();
+                }else if(request.startsWith("changePass")){
+                    changePassword(request);
+                }else if (request.equals("exit")) {
                     closeClient();
                 } else System.out.println("Incorrect command!");
 
@@ -121,6 +130,9 @@ class ClientThread extends Thread {
         }
         else{
             DatabaseFunctions.addToDatabase(email, rawPassword, firstName, lastName);
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
             sendMyMessage(succesMessage);
             System.out.println("Autentificare reusita");
         }
@@ -132,6 +144,9 @@ class ClientThread extends Thread {
         System.out.println(commandParam[0] +" "+ commandParam[1] +" "+ commandParam[2]);
 
         String email = commandParam[1];
+        this.email = email;
+        this.lastName = DatabaseFunctions.getLastName(email);
+        this.firstName = DatabaseFunctions.getFirstName(email);
         String rawPassword = commandParam[2];
 
         if(DatabaseFunctions.alreadyExistingUser(email)){
@@ -140,6 +155,25 @@ class ClientThread extends Thread {
             return response;
         }
         return false;
+    }
+
+    private void profileProblems() throws IOException {
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.firstName);
+        sb.append(" ");
+        sb.append(this.lastName);
+        sb.append(" ");
+        boolean isAdmin = false;
+        if(this.email.equals("admin@admin.com")){
+            isAdmin = true;
+        }
+        sb.append(isAdmin);
+        String message = sb.toString();
+        sendMyMessage(message);
+    }
+
+    private void changePassword(String request){
+
     }
 
 

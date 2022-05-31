@@ -19,12 +19,24 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class Profile extends Application {
 
     private static Client client;
 
     @Override
     public void start(Stage stage) throws Exception {
+        String username = "OKAY ";
+        String isAdmin = "false";
+
+        //Comentezi liniile 34-39 ca sa mearga
+        String response = recieveServerData();
+        String[] commandParam = response.split(" ");
+        String firstName = commandParam[0];
+        String lastName = commandParam[1];
+        isAdmin = commandParam[2];
+        username = makeUsername(firstName, lastName);
 
         stage.setTitle("Profile");
 
@@ -37,7 +49,7 @@ public class Profile extends Application {
         Scene scene = new Scene(grid, 580, 280);
         stage.setScene(scene);
 
-        Text scenetitle = new Text("Welcome" + " name" + "!");
+        Text scenetitle = new Text("Welcome " + username + "!");
         scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(scenetitle, 0, 0, 2, 1);
 //****************************************
@@ -63,7 +75,10 @@ public class Profile extends Application {
         HBox ABox = new HBox(10);
         ABox.setAlignment(Pos.BOTTOM_RIGHT);
         ABox.getChildren().add(Admin);
+        if(isAdmin.equals("true")){
         grid.add(ABox, 3, 9);
+        }
+
 ////************************************* |
         Label preferences = new Label("List of preferences:");
         grid.add(preferences, 0, 4);
@@ -101,6 +116,21 @@ public class Profile extends Application {
 
     public Profile(Client client) {
         this.client = client;
+    }
+
+    private String recieveServerData() throws IOException {
+        StringBuilder message = new StringBuilder();
+        message.append("ProfileData");
+        client.sendMyMessage(message.toString());
+        return client.receiveMyMessage();
+    }
+
+    private String makeUsername(String firstName,String lastName){
+        StringBuilder username = new StringBuilder();
+        username.append(firstName);
+        username.append(" ");
+        username.append(lastName);
+        return username.toString();
     }
 
 }

@@ -13,8 +13,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="JavaFXApplication" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -35,7 +35,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Application.ChangePassword">
+  <component name="RunManager" selected="Application.Client">
     <configuration name="ChangePassword" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.interface3.ChangePassword" />
       <module name="interface3" />
@@ -103,9 +103,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ChangePassword" />
         <item itemvalue="Application.Client" />
         <item itemvalue="Application.Profile" />
+        <item itemvalue="Application.ChangePassword" />
         <item itemvalue="Application.HelloApplication" />
         <item itemvalue="Application.ClientStart" />
       </list>

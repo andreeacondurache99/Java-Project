@@ -64,7 +64,7 @@ public class ChangePassword extends Application {
         SuBox.getChildren().add(Submit);
         grid.add(SuBox, 3, 4);
 ////*************************************
-        Button Back = new Button("Back");
+        Button Back = new Button("<- Back");
         HBox BBox = new HBox(4);
         BBox.setAlignment(Pos.BOTTOM_LEFT);
         BBox.getChildren().add(Back);
@@ -114,6 +114,19 @@ public class ChangePassword extends Application {
                 }
             }
         });
+
+        Back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Profile pp = new Profile();
+                try {
+                    pp.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
 

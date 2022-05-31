@@ -6,8 +6,14 @@ import java.sql.*;
 public class DatabaseFunctions {
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
 
-        String email = "cristea3000@yahoo.com";
+        String email = "admin@admin.com";
         String password = "admin";
+        String firstName = "admin";
+        String lastName = "admin";
+
+        //updateFirstName(email, firstName);
+        //updateLastName(email, lastName);
+
         if(!DatabaseFunctions.alreadyExistingUser(email))
         {DatabaseFunctions.addToDatabase(email, password);
             System.out.println("We have a new player");
@@ -150,5 +156,35 @@ public class DatabaseFunctions {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public static String getFirstName(String email) throws SQLException {
+        Connection con = Database.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select firstname from users where email='" + email+"'");
+            if(rs.next()){
+                String firstName = rs.getString(1);
+                return firstName;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String getLastName(String email) throws SQLException {
+        Connection con = Database.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select lastname from users where email='" + email+"'");
+            if(rs.next()){
+                String lastName = rs.getString(1);
+                return lastName;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
