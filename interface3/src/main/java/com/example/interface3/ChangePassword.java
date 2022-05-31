@@ -63,7 +63,12 @@ public class ChangePassword extends Application {
         SuBox.setAlignment(Pos.BOTTOM_LEFT);
         SuBox.getChildren().add(Submit);
         grid.add(SuBox, 3, 4);
-////************************************* |
+////*************************************
+        Button Back = new Button("Back");
+        HBox BBox = new HBox(4);
+        BBox.setAlignment(Pos.BOTTOM_LEFT);
+        BBox.getChildren().add(Back);
+        grid.add(BBox, 0, 4);
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 4);
