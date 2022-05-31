@@ -112,8 +112,7 @@ public class SignUpMenu extends Application {
 
 
                 if (!email.isEmpty() && !password.isEmpty() && !firstName.isEmpty()
-                        && !lastName.isEmpty() && !passwordTest.isEmpty())
-                {
+                        && !lastName.isEmpty() && !passwordTest.isEmpty()) {
                     if (!Client.isValidPassw(password)) {
                         actiontarget.setFill(Color.FIREBRICK);
                         actiontarget.setText("Passwords are not ok, check the reasons below.");
@@ -127,11 +126,10 @@ public class SignUpMenu extends Application {
                         try {
                             client.sendMyMessage(message);
                             String response = client.receiveMyMessage();
-                            if(response.equals("succes")){
+                            if (response.equals("succes")) {
                                 MainMenu mm = new MainMenu();
                                 mm.start(stage);
-                            }
-                            else{
+                            } else {
                                 actiontarget.setFill(Color.FIREBRICK);
                                 actiontarget.setText("Email already used");
                             }
@@ -169,7 +167,7 @@ public class SignUpMenu extends Application {
         this.client = client;
     }
 
-    private String formMessage(String userEmail, String password1, String userFirstName, String userLastName){
+    private String formMessage(String userEmail, String password1, String userFirstName, String userLastName) {
         StringBuilder message = new StringBuilder();
         message.append("register ");
         message.append(userEmail);
