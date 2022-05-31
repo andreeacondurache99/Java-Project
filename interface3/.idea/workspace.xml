@@ -33,9 +33,22 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../PA_project/Server" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
-  <component name="RunManager" selected="Application.Client">
+  <component name="RunManager" selected="Application.ChangePassword">
+    <configuration name="ChangePassword" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.interface3.ChangePassword" />
+      <module name="interface3" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.interface3.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Client" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.interface3.Client" />
       <module name="interface3" />
@@ -75,8 +88,8 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="LogInMenu" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.interface3.LogInMenu" />
+    <configuration name="Profile" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.interface3.Profile" />
       <module name="interface3" />
       <extension name="coverage">
         <pattern>
@@ -90,10 +103,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.ChangePassword" />
         <item itemvalue="Application.Client" />
+        <item itemvalue="Application.Profile" />
         <item itemvalue="Application.HelloApplication" />
         <item itemvalue="Application.ClientStart" />
-        <item itemvalue="Application.LogInMenu" />
       </list>
     </recent_temporary>
   </component>

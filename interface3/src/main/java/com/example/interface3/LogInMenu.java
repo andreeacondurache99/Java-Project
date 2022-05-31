@@ -94,8 +94,10 @@ public class LogInMenu extends Application {
                             client.sendMyMessage(String.valueOf(message));
                             String response = client.receiveMyMessage();
                             if (response.equals("succes")) {
-                                MainMenu mm = new MainMenu();
-                                mm.start(stage);
+                                //MainMenu mm = new MainMenu();
+                                //mm.start(stage);
+                                Profile pp = new Profile();
+                                pp.start(stage);
                             } else {
                                 actiontarget.setFill(Color.FIREBRICK);
                                 actiontarget.setText("Email or password is wrong");

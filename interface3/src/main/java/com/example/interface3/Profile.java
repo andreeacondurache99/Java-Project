@@ -80,6 +80,20 @@ public class Profile extends Application {
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 9);
         stage.show();
+
+
+        changePsswd.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                ChangePassword cpass = new ChangePassword();
+                try {
+                    cpass.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     public Profile() {
