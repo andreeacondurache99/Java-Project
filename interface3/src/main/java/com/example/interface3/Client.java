@@ -67,6 +67,7 @@ public class Client {
             String request;
             SignUpMenu sup = new SignUpMenu(client);
             LogInMenu lmn = new LogInMenu(client);
+            Profile prof=new Profile(client);
             System.out.println("DASADSA");
             lmn.dewIt();
 //            Scanner myObj = new Scanner(System.in);
