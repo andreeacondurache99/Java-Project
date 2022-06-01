@@ -68,7 +68,7 @@ public class Client {
             SignUpMenu sup = new SignUpMenu(client);
             LogInMenu lmn = new LogInMenu(client);
             ChangePassword cp = new ChangePassword(client);
-            ChangeFirstName cfn = new ChangeFirstName(client);
+            //ChangeFirstName cfn = new ChangeFirstName(client);
             Profile prof=new Profile(client);
             Admin admin = new Admin(client);
             System.out.println("Client is ON!");
