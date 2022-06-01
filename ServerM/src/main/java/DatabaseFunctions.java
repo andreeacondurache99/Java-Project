@@ -173,6 +173,21 @@ public class DatabaseFunctions {
         return null;
     }
 
+    public static int getId(String email) throws SQLException {
+        Connection con = Database.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select id from users where email='" + email+"'");
+            if(rs.next()){
+                int id = rs.getInt(1);
+                return id;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public static String getLastName(String email) throws SQLException {
         Connection con = Database.getConnection();
         try{

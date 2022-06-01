@@ -89,7 +89,12 @@ class ClientThread extends Thread {
                     profileProblems();
                 }else if(request.startsWith("changePass")){
                     changePassword(request);
-                }else if (request.equals("exit")) {
+                }else if(request.startsWith("changeFN")){
+                    changeFN(request);
+                }else if(request.startsWith("changeLN")){
+                    changeLN(request);
+                }
+                else if (request.equals("exit")) {
                     closeClient();
                 } else System.out.println("Incorrect command!");
 
@@ -157,7 +162,7 @@ class ClientThread extends Thread {
         return false;
     }
 
-    private void profileProblems() throws IOException {
+    private void profileProblems() throws IOException, SQLException {
         StringBuilder sb = new StringBuilder();
         sb.append(this.firstName);
         sb.append(" ");
@@ -168,6 +173,9 @@ class ClientThread extends Thread {
             isAdmin = true;
         }
         sb.append(isAdmin);
+        sb.append(" ");
+        int id = DatabaseFunctions.getId(this.email);
+        sb.append(id);
         String message = sb.toString();
         sendMyMessage(message);
     }
@@ -176,6 +184,19 @@ class ClientThread extends Thread {
 
     }
 
+    private void changeFN(String request) throws SQLException, IOException {
+        String[] commandParam = request.split(" "); //contains register, name
+        String firstName = commandParam[1];
+        DatabaseFunctions.updateFirstName(this.email, firstName);
+        this.firstName = firstName;
+    }
+
+    private void changeLN(String request) throws SQLException, IOException {
+        String[] commandParam = request.split(" "); //contains register, name
+        String lastName = commandParam[1];
+        DatabaseFunctions.updateLastName(this.email, lastName);
+        this.lastName = lastName;
+    }
 
     private void closeClient() throws IOException {
         System.out.println("The client disconnected!");

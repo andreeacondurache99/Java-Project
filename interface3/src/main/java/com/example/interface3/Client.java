@@ -70,7 +70,7 @@ public class Client {
             ChangePassword cp = new ChangePassword(client);
             ChangeFirstName cfn = new ChangeFirstName(client);
             Profile prof=new Profile(client);
-            System.out.println("DASADSA");
+            System.out.println("Client is ON!");
             lmn.dewIt();
 //            Scanner myObj = new Scanner(System.in);
 //            request = myObj.nextLine();
@@ -166,7 +166,7 @@ public class Client {
         var regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         // EmailValidation.patternMatches(emailAddress, regexPattern)
-        System.out.println("2nd phase");
+
 
         String serverAddress = "127.0.0.1";
         Socket socket = new Socket(serverAddress, 8100);

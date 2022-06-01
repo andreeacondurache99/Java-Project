@@ -29,6 +29,7 @@ public class Profile extends Application {
     public void start(Stage stage) throws Exception {
         String username = "OKAY ";
         String isAdmin = "false";
+        String id = null;
 
         //Comentezi liniile 34-39 ca sa mearga
         String response = recieveServerData();
@@ -36,7 +37,8 @@ public class Profile extends Application {
         String firstName = commandParam[0];
         String lastName = commandParam[1];
         isAdmin = commandParam[2];
-        username = makeUsername(firstName, lastName);
+        id = commandParam[3];
+        username = makeUsername(firstName, lastName, id);
 
         stage.setTitle("Profile");
 
@@ -62,25 +64,25 @@ public class Profile extends Application {
         Label changeF = new Label("Change First Name:");
         grid.add(changeF, 0, 3);
 
-        PasswordField userChangeNF = new PasswordField();
-        grid.add(userChangeNF, 1, 3);
+        TextField newFirstName = new  TextField();
+        grid.add(newFirstName, 1, 3);
 
-        Button changeFname = new Button("Submit");
+        Button changeFN = new Button("Submit");
         HBox FBox = new HBox(10);
         FBox.setAlignment(Pos.BOTTOM_CENTER);
-        FBox.getChildren().add(changeFname);
+        FBox.getChildren().add(changeFN);
         grid.add(FBox, 2, 3);
 //        ************************************
-        Label changeL = new Label("Change First Name:");
+        Label changeL = new Label("Change Last Name:");
         grid.add(changeL, 0, 4);
 
-        PasswordField userChangeNL = new PasswordField();
-        grid.add(userChangeNL, 1, 4);
+        TextField newLastName = new  TextField();
+        grid.add(newLastName, 1, 4);
 
-        Button changeLname = new Button("Submit");
+        Button changeLN = new Button("Submit");
         HBox LBox = new HBox(10);
         LBox.setAlignment(Pos.BOTTOM_RIGHT);
-        LBox.getChildren().add(changeLname);
+        LBox.getChildren().add(changeLN);
         grid.add(LBox, 2, 4);
 //*****************************************
         Button Admin = new Button("Connect as admin");
@@ -121,6 +123,42 @@ public class Profile extends Application {
             }
         });
 
+        changeFN.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String firstName = newFirstName.getText();
+                if(!firstName.isEmpty()){
+                    try {
+                        client.sendMyMessage(changeFName(firstName));
+                        Profile pp = new Profile();
+                        pp.start(stage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
+        changeLN.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                String lastName = newLastName.getText();
+                if(!lastName.isEmpty()){
+                    try {
+                        client.sendMyMessage(changeLName(lastName));
+                        Profile pp = new Profile();
+                        pp.start(stage);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 
     public Profile() {
@@ -137,12 +175,28 @@ public class Profile extends Application {
         return client.receiveMyMessage();
     }
 
-    private String makeUsername(String firstName,String lastName){
+    private String makeUsername(String firstName,String lastName, String id){
         StringBuilder username = new StringBuilder();
         username.append(firstName);
         username.append(" ");
         username.append(lastName);
+        username.append(" #");
+        username.append(id);
         return username.toString();
+    }
+
+    private String changeFName(String name){
+        StringBuilder message = new StringBuilder();
+        message.append("changeFN ");
+        message.append(name);
+        return message.toString();
+    }
+
+    private String changeLName(String name){
+        StringBuilder message = new StringBuilder();
+        message.append("changeLN ");
+        message.append(name);
+        return message.toString();
     }
 
 }
