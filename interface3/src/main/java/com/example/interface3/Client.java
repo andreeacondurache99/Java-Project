@@ -70,6 +70,7 @@ public class Client {
             ChangePassword cp = new ChangePassword(client);
             ChangeFirstName cfn = new ChangeFirstName(client);
             Profile prof=new Profile(client);
+            Admin admin = new Admin(client);
             System.out.println("Client is ON!");
             lmn.dewIt();
 //            Scanner myObj = new Scanner(System.in);

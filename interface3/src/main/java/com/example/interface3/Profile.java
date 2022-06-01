@@ -159,6 +159,18 @@ public class Profile extends Application {
             }
         });
 
+        Admin.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Admin ad = new Admin();
+                try {
+                    ad.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     public Profile() {

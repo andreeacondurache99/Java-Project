@@ -15,7 +15,7 @@ public class DatabaseFunctions {
         //updateLastName(email, lastName);
 
         if(!DatabaseFunctions.alreadyExistingUser(email))
-        {DatabaseFunctions.addToDatabase(email, password);
+        {DatabaseFunctions.addToDatabase(email, password, firstName, lastName);
             System.out.println("We have a new player");
         }
         else{
@@ -24,24 +24,24 @@ public class DatabaseFunctions {
             //GoingDown.updateLastName("admin", "admin");
             //changePassword("admin", "admin");
         }
-        String email2 = "c1";
-        String password2 = "admin";
-        if(!DatabaseFunctions.alreadyExistingUser(email2))
-        {DatabaseFunctions.addToDatabase(email2, password2);
-            System.out.println("We have a new player");
-        }
-        String email3 = "c2";
-        String password3 = "admin";
-        if(!DatabaseFunctions.alreadyExistingUser(email3))
-        {DatabaseFunctions.addToDatabase(email3, password3);
-            System.out.println("We have a new player");
-        }
-        String email4 = "c3";
-        String password4 = "admin";
-        if(!DatabaseFunctions.alreadyExistingUser(email4))
-        {DatabaseFunctions.addToDatabase(email4, password4);
-            System.out.println("We have a new player");
-        }
+//        String email2 = "c1";
+//        String password2 = "admin";
+//        if(!DatabaseFunctions.alreadyExistingUser(email2))
+//        {DatabaseFunctions.addToDatabase(email2, password2);
+//            System.out.println("We have a new player");
+//        }
+//        String email3 = "c2";
+//        String password3 = "admin";
+//        if(!DatabaseFunctions.alreadyExistingUser(email3))
+//        {DatabaseFunctions.addToDatabase(email3, password3);
+//            System.out.println("We have a new player");
+//        }
+//        String email4 = "c3";
+//        String password4 = "admin";
+//        if(!DatabaseFunctions.alreadyExistingUser(email4))
+//        {DatabaseFunctions.addToDatabase(email4, password4);
+//            System.out.println("We have a new player");
+//        }
 
     }
 
@@ -67,7 +67,7 @@ public class DatabaseFunctions {
         Connection con = Database.getConnection();
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select id from users where email='" + email+"'");
+            ResultSet rs = stmt.executeQuery("select id from students where email='" + email+"'");
             return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,7 +80,7 @@ public class DatabaseFunctions {
         Connection con = Database.getConnection();
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select password from users where email='" + email+"'");
+            ResultSet rs = stmt.executeQuery("select password from students where email='" + email+"'");
             if(rs.next()){
                 String dataBasePass = rs.getString(1);
                 return dataBasePass.equals(password);
@@ -94,7 +94,7 @@ public class DatabaseFunctions {
     public static void addToDatabase(String email, String rawPassword, String firstName, String lastName)throws SQLException, NoSuchAlgorithmException {
         Connection con = Database.getConnection();
         try{
-            PreparedStatement pstmt = con.prepareStatement("insert into users (email, password, firstname, lastname)" + "values(?, ?, ?, ?)");
+            PreparedStatement pstmt = con.prepareStatement("insert into students (email, password, firstname, lastname)" + "values(?, ?, ?, ?)");
             String password = bytesToHex(DatabaseFunctions.hashing(rawPassword));
             pstmt.setString(1, email);
             pstmt.setString(2, password);
@@ -110,7 +110,7 @@ public class DatabaseFunctions {
     public static void addToDatabase(String email, String rawPassword)throws SQLException, NoSuchAlgorithmException {
         Connection con = Database.getConnection();
         try{
-            PreparedStatement pstmt = con.prepareStatement("insert into users (email, password)" + "values(?, ?)");
+            PreparedStatement pstmt = con.prepareStatement("insert into students (email, password)" + "values(?, ?)");
             String password = bytesToHex(DatabaseFunctions.hashing(rawPassword));
             pstmt.setString(1, email);
             pstmt.setString(2, password);
@@ -123,7 +123,7 @@ public class DatabaseFunctions {
 
     public static void updateFirstName(String email, String firstName) throws SQLException {
         Connection con = Database.getConnection();
-        try{PreparedStatement pstmt = con.prepareStatement("update users set firstName = ? where email = ?");
+        try{PreparedStatement pstmt = con.prepareStatement("update students set firstName = ? where email = ?");
             pstmt.setString(1, firstName);
             pstmt.setString(2, email);
             pstmt.executeUpdate();
@@ -135,7 +135,7 @@ public class DatabaseFunctions {
 
     public static void updateLastName(String email, String lastName) throws SQLException {
         Connection con = Database.getConnection();
-        try{PreparedStatement pstmt = con.prepareStatement("update users set lastName = ? where email = ?");
+        try{PreparedStatement pstmt = con.prepareStatement("update students set lastName = ? where email = ?");
             pstmt.setString(1, lastName);
             pstmt.setString(2, email);
             pstmt.executeUpdate();
@@ -148,7 +148,7 @@ public class DatabaseFunctions {
     public static void changePassword(String email, String newRawPassword) throws NoSuchAlgorithmException, SQLException {
         String newPassword = bytesToHex(DatabaseFunctions.hashing(newRawPassword));
         Connection con = Database.getConnection();
-        try{PreparedStatement pstmt = con.prepareStatement("update users set password = ? where email = ?");
+        try{PreparedStatement pstmt = con.prepareStatement("update students set password = ? where email = ?");
             pstmt.setString(1, newPassword);
             pstmt.setString(2, email);
             pstmt.executeUpdate();
@@ -162,7 +162,7 @@ public class DatabaseFunctions {
         Connection con = Database.getConnection();
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select firstname from users where email='" + email+"'");
+            ResultSet rs = stmt.executeQuery("select firstname from students where email='" + email+"'");
             if(rs.next()){
                 String firstName = rs.getString(1);
                 return firstName;
@@ -177,7 +177,7 @@ public class DatabaseFunctions {
         Connection con = Database.getConnection();
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select id from users where email='" + email+"'");
+            ResultSet rs = stmt.executeQuery("select id from students where email='" + email+"'");
             if(rs.next()){
                 int id = rs.getInt(1);
                 return id;
@@ -192,7 +192,7 @@ public class DatabaseFunctions {
         Connection con = Database.getConnection();
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select lastname from users where email='" + email+"'");
+            ResultSet rs = stmt.executeQuery("select lastname from students where email='" + email+"'");
             if(rs.next()){
                 String lastName = rs.getString(1);
                 return lastName;

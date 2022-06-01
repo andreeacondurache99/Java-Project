@@ -56,7 +56,7 @@ class ClientThread extends Thread {
             //out = new PrintWriter(socket.getOutputStream());
 
             boolean running = true;
-            socket.setSoTimeout(60000); //60 secunde
+            //socket.setSoTimeout(60000); //60 secunde
             while (running) {
 
                 String request = receiveMyMessage(); //the request from client
@@ -69,30 +69,25 @@ class ClientThread extends Thread {
                 if (request.equals("stop")) {
                     running = false;
                     stopServer();
+
                 } else if (request.startsWith("register")) {
-                    //register name: adds a new person to the social network;
                     register(request);
 
-
                 } else if (request.startsWith("login")) {
-
-                    boolean valid = login(request);
-                    if(valid){
-
-                        sendMyMessage(succesMessage);
-                    }
-                    else{
-                        sendMyMessage(failedMessage);
-                    }
+                    login(request);
 
                 }else if(request.equals("ProfileData")){
                     profileProblems();
+
                 }else if(request.startsWith("changePass")){
                     changePassword(request);
+
                 }else if(request.startsWith("changeFN")){
                     changeFN(request);
+
                 }else if(request.startsWith("changeLN")){
                     changeLN(request);
+
                 }
                 else if (request.equals("exit")) {
                     closeClient();
@@ -143,7 +138,7 @@ class ClientThread extends Thread {
         }
     }
 
-    private boolean login(String request) throws SQLException, NoSuchAlgorithmException {
+    private void login(String request) throws SQLException, NoSuchAlgorithmException, IOException {
 
         String[] commandParam = request.split(" "); //contains register, name
         System.out.println(commandParam[0] +" "+ commandParam[1] +" "+ commandParam[2]);
@@ -157,9 +152,11 @@ class ClientThread extends Thread {
         if(DatabaseFunctions.alreadyExistingUser(email)){
             boolean response = DatabaseFunctions.verifyCredentials(email, rawPassword);
             loggedIn = true;
-            return response;
+            sendMyMessage(succesMessage);
+            //return response;
         }
-        return false;
+        sendMyMessage(failedMessage);
+        //return false;
     }
 
     private void profileProblems() throws IOException, SQLException {
