@@ -31,12 +31,12 @@ public class Profile extends Application {
         String isAdmin = "false";
 
         //Comentezi liniile 34-39 ca sa mearga
-        String response = recieveServerData();
-        String[] commandParam = response.split(" ");
-        String firstName = commandParam[0];
-        String lastName = commandParam[1];
-        isAdmin = commandParam[2];
-        username = makeUsername(firstName, lastName);
+//        String response = recieveServerData();
+//        String[] commandParam = response.split(" ");
+//        String firstName = commandParam[0];
+//        String lastName = commandParam[1];
+//        isAdmin = commandParam[2];
+//        username = makeUsername(firstName, lastName);
 
         stage.setTitle("Profile");
 
@@ -59,17 +59,29 @@ public class Profile extends Application {
         CBox.getChildren().add(changePsswd);
         grid.add(CBox, 0, 2);
 //******************************************
-        Button changeFname = new Button("Change First Name");
+        Label changeF = new Label("Change First Name:");
+        grid.add(changeF, 0, 3);
+
+        PasswordField userChangeNF = new PasswordField();
+        grid.add(userChangeNF, 1, 3);
+
+        Button changeFname = new Button("Submit");
         HBox FBox = new HBox(10);
         FBox.setAlignment(Pos.BOTTOM_CENTER);
         FBox.getChildren().add(changeFname);
-        grid.add(FBox, 1, 2);
+        grid.add(FBox, 2, 3);
 //        ************************************
-        Button changeLname = new Button("Change Last Name");
+        Label changeL = new Label("Change First Name:");
+        grid.add(changeL, 0, 4);
+
+        PasswordField userChangeNL = new PasswordField();
+        grid.add(userChangeNL, 1, 4);
+
+        Button changeLname = new Button("Submit");
         HBox LBox = new HBox(10);
         LBox.setAlignment(Pos.BOTTOM_RIGHT);
         LBox.getChildren().add(changeLname);
-        grid.add(LBox, 2, 2);
+        grid.add(LBox, 2, 4);
 //*****************************************
         Button Admin = new Button("Connect as admin");
         HBox ABox = new HBox(10);
@@ -81,7 +93,7 @@ public class Profile extends Application {
 
 ////************************************* |
         Label preferences = new Label("List of preferences:");
-        grid.add(preferences, 0, 4);
+        grid.add(preferences, 0, 5);
 ////***************************
         Label partener = new Label("Your partener id is:");
         grid.add(partener, 0, 6);
@@ -90,7 +102,7 @@ public class Profile extends Application {
         HBox RBox = new HBox(4);
         RBox.setAlignment(Pos.BOTTOM_LEFT);
         RBox.getChildren().add(Finish);
-        grid.add(RBox, 1, 4);
+        grid.add(RBox, 1, 5);
 
         final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 9);
