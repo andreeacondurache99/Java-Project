@@ -31,12 +31,12 @@ public class Profile extends Application {
         String isAdmin = "false";
 
         //Comentezi liniile 34-39 ca sa mearga
-//        String response = recieveServerData();
-//        String[] commandParam = response.split(" ");
-//        String firstName = commandParam[0];
-//        String lastName = commandParam[1];
-//        isAdmin = commandParam[2];
-//        username = makeUsername(firstName, lastName);
+        String response = recieveServerData();
+        String[] commandParam = response.split(" ");
+        String firstName = commandParam[0];
+        String lastName = commandParam[1];
+        isAdmin = commandParam[2];
+        username = makeUsername(firstName, lastName);
 
         stage.setTitle("Profile");
 
