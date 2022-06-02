@@ -17,14 +17,17 @@ public class DatabaseFunctions {
         String firstName = "admin";
         String lastName = "admin";
 
-        DatabaseFunctions.randomPriorityQueueGenerator();
+        //DatabaseFunctions.randomPriorityQueueGenerator();
 
-//        Connection con = Database.Database.getConnection();
-//        try{PreparedStatement pstmt = con.prepareStatement("update students set chosen = ? where email = ?");
-//            pstmt.setString(1, "");
+
+
+
+//        Connection con = Database.getConnection();
+//        try{PreparedStatement pstmt = con.prepareStatement("update students set roommate = ? where email = ?");
+//            pstmt.setInt(1, 0);
 //            pstmt.setString(2, email);
 //            pstmt.executeUpdate();
-//            Database.Database.getConnection().commit();
+//            Database.getConnection().commit();
 //        }catch (SQLException e){
 //            e.printStackTrace();
 //        }
@@ -252,6 +255,31 @@ public class DatabaseFunctions {
         return null;
     }
 
+    public static String[] getAllIds() throws SQLException {
+
+        Connection con = Database.getConnection();
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("select count(id) from students");
+        int count=0;
+        if(rs.next()) {
+            count=rs.getInt(1);
+            count--;
+        }
+
+        Statement stmt2 = con.createStatement();
+        ResultSet rs2 = stmt2.executeQuery("select id from students where id!=1");
+
+        String[] students = new String[count];
+
+        int i=0;
+        while(rs2.next()){
+            int id = rs2.getInt(1);
+            students[i++]=String.valueOf(id);
+        }
+        return students;
+    }
+
+
     public static int getId(String email) throws SQLException {
         Connection con = Database.getConnection();
         try{
@@ -341,6 +369,21 @@ public class DatabaseFunctions {
         }
     }
 
+    public static int getRoommate(String email) throws SQLException {
+        Connection con = Database.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select roommate from students where email='" + email+"'");
+            if(rs.next()){
+                int chosen = rs.getInt(1);
+                return chosen;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     private static String makeListToString(List<String> allIds, int currentId){
         String currId=String.valueOf(currentId);
         List<String> ids = new ArrayList<>(allIds);
@@ -374,6 +417,18 @@ public class DatabaseFunctions {
         return "";
     }
 
+    public static void addRoommate(String id, String roommateId) throws SQLException {
+        Connection con = Database.getConnection();
+        try{PreparedStatement pstmt = con.prepareStatement("update students set roommate = ? where id = ?");
+            pstmt.setInt(1, Integer.parseInt(roommateId));
+            pstmt.setInt(2, Integer.parseInt(id));
+            pstmt.executeUpdate();
+            Database.getConnection().commit();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public static String giveChosen(String email) throws SQLException {
         Connection con = Database.getConnection();
         try{
@@ -387,6 +442,21 @@ public class DatabaseFunctions {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String getChosenArray(int id) throws SQLException {
+        Connection con = Database.getConnection();
+        String chosen="";
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select chosen from students where id='" + id+"'");
+            if(rs.next()){
+                chosen = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return chosen;
     }
 
     public static boolean giveMeToChose(String email) throws SQLException {

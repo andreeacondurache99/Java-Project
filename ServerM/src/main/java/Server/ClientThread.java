@@ -1,5 +1,6 @@
 package Server;
 
+import Algorithm.StableRoommate;
 import Database.DatabaseFunctions;
 
 import java.io.*;
@@ -98,7 +99,9 @@ class ClientThread extends Thread {
                 }else if(request.startsWith("chosen")){
                     changeChosen(request);
 
-                } else if (request.equals("generateRandomLists")) {
+                } else if (request.equals("StartAlgorithm")) {
+                    StartAlgo();
+                }else if (request.equals("generateRandomLists")) {
                     DatabaseFunctions.randomPriorityQueueGenerator();
                 } else if (request.equals("ConstructLists")) {
                     DatabaseFunctions.constructUnchosenLists();
@@ -190,10 +193,33 @@ class ClientThread extends Thread {
         }
         sb.append(isAdmin);
         sb.append(" ");
+
         int id = DatabaseFunctions.getId(this.email);
         sb.append(id);
+        sb.append(" ");
+
+        int roommate=DatabaseFunctions.getRoommate(this.email);
+        sb.append(roommate);
+
         String message = sb.toString();
         sendMyMessage(message);
+    }
+
+
+    private void StartAlgo() throws SQLException {
+        String[] ids = DatabaseFunctions.getAllIds();
+        String[][] matrix = new String[ids.length][];
+        for(int i=0;i<ids.length;i++){
+            System.out.println(ids[i]);
+            String response = DatabaseFunctions.getChosenArray(Integer.parseInt(ids[i]));
+            if(!response.isEmpty()){
+                String[] list = response.split(" ");
+                matrix[i] = list;
+            }
+        }
+
+        StableRoommate stableRoommate = new StableRoommate(ids, matrix);
+        stableRoommate.startAglo();
     }
 
     private void changePassword(String request) throws SQLException, NoSuchAlgorithmException, IOException {

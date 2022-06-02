@@ -40,6 +40,8 @@ public class Database {
         }
     }
 
+
+
     public static void closeConnection() throws SQLException {
         connection.close();
     }

@@ -1,5 +1,8 @@
+package Algorithm;
 
-import java.util.Arrays;
+import Database.DatabaseFunctions;
+
+import java.sql.SQLException;
 
 public class StableRoommate {
     private int N, preferencesCount;
@@ -18,7 +21,6 @@ public class StableRoommate {
         stud1Pref = mp;
         stud1Pair = new boolean[N];
         rezultat = new String[N];
-        calcMatches();
     }
 
     /**
@@ -27,7 +29,7 @@ public class StableRoommate {
 
 
 
-    private void calcMatches() {
+    private void calcMatches() throws SQLException {
         while (preferencesCount < N) {
             int free ;
             for (free = 0; free < N; free++)
@@ -78,12 +80,20 @@ public class StableRoommate {
     }
 
 
-    public void printRoomates(){
+    public void printRoomates() throws SQLException {
         System.out.println("Roomates are : ");
         for (int i = 0; i < N; i++) {
             System.out.println(stud1[i] + " "+ rezultat[i]);
+            //DatabaseFunctions.addRoommate(stud1[i], rezultat[i]);
         }
 
+    }
+
+    public void startAglo() throws SQLException {
+        calcMatches();
+        for (int i = 0; i < N; i++) {
+            DatabaseFunctions.addRoommate(stud1[i], rezultat[i]);
+        }
     }
 
     /**

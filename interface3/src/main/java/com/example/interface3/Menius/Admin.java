@@ -115,6 +115,18 @@ public class Admin extends Application {
             }
         });
 
+        Algo.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    client.sendMyMessage("StartAlgorithm");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
     public Admin() {

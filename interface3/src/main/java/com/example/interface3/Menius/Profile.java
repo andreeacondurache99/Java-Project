@@ -30,6 +30,7 @@ public class Profile extends Application {
         String username = "OKAY ";
         String isAdmin = "false";
         String id = null;
+        String roommate="0";
 
         //Comentezi liniile 34-39 ca sa mearga
         String response = recieveServerData();
@@ -38,6 +39,7 @@ public class Profile extends Application {
         String lastName = commandParam[1];
         isAdmin = commandParam[2];
         id = commandParam[3];
+        roommate = commandParam[4];
         Controller cont = new Controller(Integer.parseInt(id));
         username = makeUsername(firstName, lastName, id);
 
@@ -98,7 +100,8 @@ public class Profile extends Application {
         Label preferences = new Label("List of preferences:");
         grid.add(preferences, 0, 5);
 ////***************************
-        Label partener = new Label("Your partener id is:");
+        if(roommate.equals("0")) roommate="";
+        Label partener = new Label("Your partener id is:    " + roommate);
         grid.add(partener, 0, 6);
 
         Button Finish = new Button("Choose your preferences");
