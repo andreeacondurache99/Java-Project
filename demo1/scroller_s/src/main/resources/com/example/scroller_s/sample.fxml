@@ -18,26 +18,26 @@
 <?import javafx.scene.text.Font?>
 <AnchorPane
         fx:controller="com.example.scroller_s.Controller"
-        prefHeight="396" prefWidth="908"
+        prefHeight="396" prefWidth="549"
         xmlns:fx="https://javafx.com/fxml">
     <children>
-        <Button fx:id="button_send" layoutX="826" layoutY="338" text="Submit"/>
+        <Button fx:id="button_send" layoutX="466" layoutY="338" text="Submit"/>
 <!--        <TextField fx:id="tf_message" layoutX="30" layoutY="338"-->
 <!--                   prefWidth="361" prefHeight="26"/>-->
         <ScrollPane fx:id="sp_main" layoutY="70" layoutX="30"
-                    prefHeight="256" prefWidth="418" fitToWidth="true">
+                    prefHeight="256" prefWidth="218" fitToWidth="true">
             <content>
-                <VBox fx:id="vbox_messages" prefHeight="248" prefWidth="212"/>
+                <VBox fx:id="vbox_messages" prefHeight="248" prefWidth="112"/>
             </content>
         </ScrollPane>
 
-        <ScrollPane fx:id="sp_main2" layoutY="70" layoutX="460"
-                    prefHeight="256" prefWidth="418" fitToWidth="true">
+        <ScrollPane fx:id="sp_main2" layoutY="70" layoutX="300"
+                    prefHeight="256" prefWidth="218" fitToWidth="true">
             <content>
-                <VBox fx:id="vbox_messages2" prefHeight="248" prefWidth="212"/>
+                <VBox fx:id="vbox_messages2" prefHeight="248" prefWidth="112"/>
             </content>
         </ScrollPane>
-        <Label layoutX="400" layoutY="26"
+        <Label layoutX="200" layoutY="26"
                text="Preferences list">
             <font>
                 <Font name="Arial Rounded MT Bold" size="23"></Font>

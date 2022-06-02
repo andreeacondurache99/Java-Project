@@ -32,14 +32,14 @@ public class Profile extends Application {
         String id = null;
 
         //Comentezi liniile 34-39 ca sa mearga
-        String response = recieveServerData();
-        String[] commandParam = response.split(" ");
-        String firstName = commandParam[0];
-        String lastName = commandParam[1];
-        isAdmin = commandParam[2];
-        id = commandParam[3];
-        Controller cont = new Controller(Integer.parseInt(id));
-        username = makeUsername(firstName, lastName, id);
+//        String response = recieveServerData();
+//        String[] commandParam = response.split(" ");
+//        String firstName = commandParam[0];
+//        String lastName = commandParam[1];
+//        isAdmin = commandParam[2];
+//        id = commandParam[3];
+//        Controller cont = new Controller(Integer.parseInt(id));
+//        username = makeUsername(firstName, lastName, id);
 
         stage.setTitle("Profile");
 
@@ -49,7 +49,7 @@ public class Profile extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 580, 280);
+        Scene scene = new Scene(grid, 440, 250);
         stage.setScene(scene);
 
         Text scenetitle = new Text("Welcome " + username + "!");
@@ -108,7 +108,7 @@ public class Profile extends Application {
         grid.add(RBox, 1, 5);
 
         final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 9);
+        grid.add(actiontarget, 1, 7);
         stage.show();
 
 

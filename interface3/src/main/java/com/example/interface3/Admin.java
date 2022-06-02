@@ -47,7 +47,7 @@ public class Admin extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 380, 340);
+        Scene scene = new Scene(grid, 350, 290);
         stage.setScene(scene);
 
         Text scenetitle = new Text("Welcome to the admin menu!");
@@ -131,17 +131,6 @@ public class Admin extends Application {
                 try {
                     pp.start(stage);
                 } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        Generate.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                try {
-                    client.sendMyMessage("generateRandomLists");
-                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
