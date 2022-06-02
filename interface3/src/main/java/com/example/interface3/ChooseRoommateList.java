@@ -15,6 +15,7 @@ public class ChooseRoommateList extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        Controller cont = new Controller(stage);
         FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("sample.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 908, 396);
         stage.setTitle("Client");

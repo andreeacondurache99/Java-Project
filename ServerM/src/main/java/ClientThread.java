@@ -82,14 +82,27 @@ class ClientThread extends Thread {
                 }else if(request.startsWith("changePass")){
                     changePassword(request);
 
+                } else if(request.startsWith("GiveNameOf")){
+                    giveUsername(request);
+
                 }else if(request.startsWith("changeFN")){
                     changeFN(request);
 
                 }else if(request.startsWith("changeLN")){
                     changeLN(request);
 
-                }else if (request.equals("ConstructLists")) {
+                }else if(request.startsWith("tobechosen")){
+                    changeToBeChosen(request);
+
+                }else if(request.startsWith("chosen")){
+                    changeChosen(request);
+
+                } else if (request.equals("ConstructLists")) {
                     DatabaseFunctions.constructUnchosenLists();
+                }else if (request.equals("giveMeToChose")) {
+                    boolean response = DatabaseFunctions.giveMeToChose(email);
+                    System.out.println("Response is "+response);
+                    resolveChosenResponse(response);
                 }
                 else if (request.equals("exit")) {
                     closeClient();
@@ -182,6 +195,41 @@ class ClientThread extends Thread {
 
     private void changePassword(String request){
 
+    }
+
+    private void changeToBeChosen(String request) throws SQLException {
+        String[] list = request.split(",");
+        String toBeChosen = "";
+        if(list.length!=1)
+        toBeChosen = list[1];
+        DatabaseFunctions.changeToBeChosen(toBeChosen, this.email);
+    }
+
+    private void changeChosen(String request) throws SQLException {
+        String[] list = request.split(",");
+        String chosen ="";
+        if(list.length!=1)
+         chosen = list[1];
+        DatabaseFunctions.changeChosen(chosen, this.email);
+    }
+
+    private void giveUsername(String request) throws SQLException, IOException {
+        String[] id = request.split(" ");
+        int myId = Integer.parseInt(id[1]);
+        System.out.println("THE ID IS " + myId);
+        String response = DatabaseFunctions.giveUsername(myId);
+        sendMyMessage(response);
+    }
+
+    private void resolveChosenResponse(boolean response) throws IOException, SQLException {
+        if(!response){
+            sendMyMessage(failedMessage);
+        }
+        else{
+            sendMyMessage(succesMessage);
+            sendMyMessage(DatabaseFunctions.giveChosen(this.email));
+            sendMyMessage(DatabaseFunctions.giveToChose(this.email));
+        }
     }
 
     private void changeFN(String request) throws SQLException, IOException {

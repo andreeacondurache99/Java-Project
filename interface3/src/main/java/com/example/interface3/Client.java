@@ -64,6 +64,7 @@ public class Client {
     public void sendMessage2(Client client) throws Exception {
         boolean running = true;
         while (running) {
+
             String request;
             SignUpMenu sup = new SignUpMenu(client);
             LogInMenu lmn = new LogInMenu(client);
