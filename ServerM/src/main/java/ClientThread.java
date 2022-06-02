@@ -97,6 +97,8 @@ class ClientThread extends Thread {
                 }else if(request.startsWith("chosen")){
                     changeChosen(request);
 
+                } else if (request.equals("generateRandomLists")) {
+                    DatabaseFunctions.randomPriorityQueueGenerator();
                 } else if (request.equals("ConstructLists")) {
                     DatabaseFunctions.constructUnchosenLists();
                 }else if (request.equals("giveMeToChose")) {

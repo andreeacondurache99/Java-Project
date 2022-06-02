@@ -7,7 +7,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class DatabaseFunctions {
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
@@ -17,48 +19,87 @@ public class DatabaseFunctions {
         String firstName = "admin";
         String lastName = "admin";
 
+        DatabaseFunctions.randomPriorityQueueGenerator();
+
+//        Connection con = Database.getConnection();
+//        try{PreparedStatement pstmt = con.prepareStatement("update students set chosen = ? where email = ?");
+//            pstmt.setString(1, "");
+//            pstmt.setString(2, email);
+//            pstmt.executeUpdate();
+//            Database.getConnection().commit();
+//        }catch (SQLException e){
+//            e.printStackTrace();
+//        }
+//
+//
+//        if(!DatabaseFunctions.alreadyExistingUser(email))
+//        {DatabaseFunctions.addToDatabase(email, password, firstName, lastName);
+//            System.out.println("We have a new player");
+//        }
+//        else {
+//            System.out.println("We already have this guy");
+//        }
+
+    }
+
+    public static void randomPriorityQueueGenerator() throws SQLException{
         Connection con = Database.getConnection();
-        try{PreparedStatement pstmt = con.prepareStatement("update students set chosen = ? where email = ?");
-            pstmt.setString(1, "");
-            pstmt.setString(2, email);
-            pstmt.executeUpdate();
-            Database.getConnection().commit();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("select id from students where id!=1");
 
-        //updateFirstName(email, firstName);
-        //updateLastName(email, lastName);
+        while(rs.next()){
+            int id = rs.getInt(1);
+            System.out.println("Id-ul userului: " + id);
+            Statement stmt2 = con.createStatement();
+            ResultSet rs2 = stmt2.executeQuery("select tobechosen from students where id='" + id+"'");
+            if(rs2.next()){
+                String tobechosen = rs2.getString(1);
+                if(!tobechosen.isEmpty()){
 
-        if(!DatabaseFunctions.alreadyExistingUser(email))
-        {DatabaseFunctions.addToDatabase(email, password, firstName, lastName);
-            System.out.println("We have a new player");
-        }
-        else{
-            System.out.println("We already have this guy");
-            //GoingDown.updateFirstName("admin", "admin");
-            //GoingDown.updateLastName("admin", "admin");
-            //changePassword("admin", "admin");
-        }
-//        String email2 = "c1";
-//        String password2 = "admin";
-//        if(!DatabaseFunctions.alreadyExistingUser(email2))
-//        {DatabaseFunctions.addToDatabase(email2, password2);
-//            System.out.println("We have a new player");
-//        }
-//        String email3 = "c2";
-//        String password3 = "admin";
-//        if(!DatabaseFunctions.alreadyExistingUser(email3))
-//        {DatabaseFunctions.addToDatabase(email3, password3);
-//            System.out.println("We have a new player");
-//        }
-//        String email4 = "c3";
-//        String password4 = "admin";
-//        if(!DatabaseFunctions.alreadyExistingUser(email4))
-//        {DatabaseFunctions.addToDatabase(email4, password4);
-//            System.out.println("We have a new player");
-//        }
+                    List<String> notChosen = new ArrayList<>();
+                    String[] allIds= tobechosen.split(" ");
 
+                    for(int i=0;i<allIds.length;i++){
+                        notChosen.add(allIds[i]);
+                    }
+
+                    Random r1 = new Random();
+                    for (int i = notChosen.size() - 1; i >= 1; i--) {
+                        Collections.swap(notChosen, i, r1.nextInt(i + 1));
+                    }
+
+                    Statement stmt3 = con.createStatement();
+                    ResultSet rs3 = stmt3.executeQuery("select chosen from students where id='" + id+"'");
+                    String chosen ="";
+                    if(rs3.next())
+                    chosen = rs3.getString(1);
+
+                    System.out.println(notChosen.toString());
+                    StringBuilder remainingElements = new StringBuilder();
+
+                    if(!chosen.isEmpty()) {
+                    remainingElements.append(chosen);
+                    remainingElements.append(" ");
+                    }
+
+
+                    for(int i=0;i<notChosen.size();i++){
+                        remainingElements.append(notChosen.get(i));
+                        remainingElements.append(" ");
+                    }
+                    remainingElements.deleteCharAt(remainingElements.length() - 1);
+
+                    Statement stmt4 = con.createStatement();
+                    ResultSet rs4 = stmt4.executeQuery("select email from students where id='" + id+"'");
+                    String email = "";
+                    if(rs4.next())
+                    email = rs4.getString(1);
+
+                    DatabaseFunctions.changeToBeChosen("", email);
+                    DatabaseFunctions.changeChosen(remainingElements.toString(), email);
+                }
+            }
+        }
     }
 
     protected static byte[] hashing(String password) throws NoSuchAlgorithmException {
@@ -269,15 +310,12 @@ public class DatabaseFunctions {
         }
     }
 
+
+
     private static void addToAllStudents(List<String> ids, int count) throws SQLException {
         Connection con = Database.getConnection();
         Statement stmt = con.createStatement();
         ResultSet rs = stmt.executeQuery("select id from students");
-
-        //Gson gson = new Gson();
-        //String myIds = gson.toJson(ids);
-
-
 
         while(rs.next()){
             int id = rs.getInt(1);

@@ -136,6 +136,17 @@ public class Admin extends Application {
             }
         });
 
+        Generate.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                try {
+                    client.sendMyMessage("generateRandomLists");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     public Admin() {

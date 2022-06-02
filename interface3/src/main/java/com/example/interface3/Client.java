@@ -63,7 +63,7 @@ public class Client {
 
     public void sendMessage2(Client client) throws Exception {
         boolean running = true;
-        while (running) {
+        if (running) {
 
             String request;
             SignUpMenu sup = new SignUpMenu(client);
@@ -83,11 +83,11 @@ public class Client {
 //            bufferedWriter.newLine();
 //            bufferedWriter.flush();
         }
-        String response = bufferedReader.readLine();
-        if (response == null) {
+        //String response = bufferedReader.readLine();
+        //if (response == null) {
             System.out.println("You've lost connection to the server");
             socket.close();
-        } else System.out.println(response);
+        //} else System.out.println(response);
     }
 
     // Sending a message isn't blocking and can be done without spawning a thread, unlike waiting for a message.
