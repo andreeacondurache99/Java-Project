@@ -40,14 +40,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../interface3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../stable-matching-java-master" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager" selected="Application.MainServer">
     <configuration name="DatabaseFunctions" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="DatabaseFunctions" />
+      <option name="MAIN_CLASS_NAME" value="Database.DatabaseFunctions" />
       <module name="ServerM" />
       <method v="2">
         <option name="Make" enabled="true" />

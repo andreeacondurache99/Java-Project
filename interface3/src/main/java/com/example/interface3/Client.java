@@ -1,10 +1,17 @@
 package com.example.interface3;
 
+import com.example.interface3.Authentication.LogInMenu;
+import com.example.interface3.Authentication.SignUpMenu;
+import com.example.interface3.Menius.Admin;
+import com.example.interface3.Menius.ChangePassword;
+import com.example.interface3.Menius.Profile;
+import com.example.interface3.Menius.Scrollers.ChooseRoommateList;
+import com.example.interface3.Menius.Scrollers.Controller;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 import java.util.regex.*;
-import java.util.*;
 
 // A client sends messages to the server, the server spawns a thread to communicate with the client.
 // Each communication with a client is added to an array list so any message sent gets sent to every other client
@@ -196,7 +203,7 @@ public class Client {
                 + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         //Compile regular expression to get the pattern
         Pattern pattern = Pattern.compile(regexPattern);
-
+        System.out.println("I ve been here");
         Matcher matcher = pattern.matcher(password);
         return matcher.matches();
     }
