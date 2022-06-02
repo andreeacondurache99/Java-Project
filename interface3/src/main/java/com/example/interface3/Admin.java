@@ -124,6 +124,18 @@ public class Admin extends Application {
             }
         });
 
+        Back.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                Profile pp = new Profile();
+                try {
+                    pp.start(stage);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     public Admin() {
