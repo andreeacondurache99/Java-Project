@@ -32,14 +32,14 @@ public class Profile extends Application {
         String id = null;
 
         //Comentezi liniile 34-39 ca sa mearga
-//        String response = recieveServerData();
-//        String[] commandParam = response.split(" ");
-//        String firstName = commandParam[0];
-//        String lastName = commandParam[1];
-//        isAdmin = commandParam[2];
-//        id = commandParam[3];
-//        Controller cont = new Controller(Integer.parseInt(id));
-//        username = makeUsername(firstName, lastName, id);
+        String response = recieveServerData();
+        String[] commandParam = response.split(" ");
+        String firstName = commandParam[0];
+        String lastName = commandParam[1];
+        isAdmin = commandParam[2];
+        id = commandParam[3];
+        Controller cont = new Controller(Integer.parseInt(id));
+        username = makeUsername(firstName, lastName, id);
 
         stage.setTitle("Profile");
 

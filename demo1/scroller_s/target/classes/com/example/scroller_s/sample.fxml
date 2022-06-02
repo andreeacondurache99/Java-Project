@@ -43,6 +43,8 @@
                 <Font name="Arial Rounded MT Bold" size="23"></Font>
             </font>
         </Label>
+        <Button fx:id="button_back" layoutX="400" layoutY="338" text="<-Back"/>
+
     </children>
 </AnchorPane>
 
