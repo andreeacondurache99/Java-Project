@@ -171,6 +171,17 @@ public class Profile extends Application {
             }
         });
 
+        Finish.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                ChooseRoommateList crl = new ChooseRoommateList();
+                try {
+                    crl.start(stage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     public Profile() {

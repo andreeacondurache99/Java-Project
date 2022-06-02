@@ -2,6 +2,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseFunctions {
     public static void main(String[] args) throws SQLException, NoSuchAlgorithmException {
@@ -202,4 +203,35 @@ public class DatabaseFunctions {
         }
         return null;
     }
+
+
+    public static void constructUnchosenLists() throws SQLException {
+        Connection con = Database.getConnection();
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select count(id) from students");
+            ArrayList<String> ids = new ArrayList<String>();
+            if(rs.next()){
+                int count = rs.getInt(1);
+                System.out.println("Count is: " +count);
+                ResultSet rs2 = stmt.executeQuery("select id from students");
+                while(rs2.next()){
+                    int id = rs2.getInt(1);
+                    System.out.println(id);
+                }
+//                if(rs2.next()){
+//                    for(int i=1;i<=count;i++){
+//                        int id = rs2.getInt(1);
+//                        if(id!=1) {
+//                            System.out.println(id);
+//                            ids.add(String.valueOf(id));
+//                        }
+//                    }
+//                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

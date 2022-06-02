@@ -71,6 +71,8 @@ public class Client {
             //ChangeFirstName cfn = new ChangeFirstName(client);
             Profile prof=new Profile(client);
             Admin admin = new Admin(client);
+            ChooseRoommateList crl = new ChooseRoommateList(client);
+            Controller con = new Controller(client);
             System.out.println("Client is ON!");
             lmn.dewIt();
 //            Scanner myObj = new Scanner(System.in);

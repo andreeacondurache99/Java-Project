@@ -88,6 +88,8 @@ class ClientThread extends Thread {
                 }else if(request.startsWith("changeLN")){
                     changeLN(request);
 
+                }else if (request.equals("ConstructLists")) {
+                    DatabaseFunctions.constructUnchosenLists();
                 }
                 else if (request.equals("exit")) {
                     closeClient();
@@ -149,14 +151,15 @@ class ClientThread extends Thread {
         this.firstName = DatabaseFunctions.getFirstName(email);
         String rawPassword = commandParam[2];
 
-        if(DatabaseFunctions.alreadyExistingUser(email)){
-            boolean response = DatabaseFunctions.verifyCredentials(email, rawPassword);
+        if(DatabaseFunctions.alreadyExistingUser(email) && DatabaseFunctions.verifyCredentials(email, rawPassword)){
+
             loggedIn = true;
             sendMyMessage(succesMessage);
             //return response;
         }
-        sendMyMessage(failedMessage);
-        //return false;
+        else {
+            sendMyMessage(failedMessage);
+        }//return false;
     }
 
     private void profileProblems() throws IOException, SQLException {

@@ -7,17 +7,30 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Main extends Application {
+
+
+public class ChooseRoommateList extends Application {
+
+    private static Client client;
+
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("sample.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("sample.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 908, 396);
         stage.setTitle("Client");
         stage.setScene(scene);
         stage.show();
+
+
     }
 
     public static void main(String[] args) {
         launch();
     }
+
+    public ChooseRoommateList(Client client) {
+        this.client=client;
+    }
+
+    public ChooseRoommateList(){}
 }
