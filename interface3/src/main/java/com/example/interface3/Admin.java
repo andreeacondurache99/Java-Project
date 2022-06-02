@@ -47,7 +47,7 @@ public class Admin extends Application {
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
 
-        Scene scene = new Scene(grid, 480, 240);
+        Scene scene = new Scene(grid, 380, 340);
         stage.setScene(scene);
 
         Text scenetitle = new Text("Welcome to the admin menu!");
@@ -72,11 +72,11 @@ public class Admin extends Application {
 //        TextField userNewPassR = new TextField();
 //        grid.add(userNewPassR, 1, 3);
 ////*****************************************
-//        Button Submit = new Button("Submit");
-//        HBox SuBox = new HBox(4);
-//        SuBox.setAlignment(Pos.BOTTOM_LEFT);
-//        SuBox.getChildren().add(Submit);
-//        grid.add(SuBox, 3, 4);
+        Button Back = new Button("<-Back");
+        HBox SuBox = new HBox(4);
+        SuBox.setAlignment(Pos.BOTTOM_LEFT);
+        SuBox.getChildren().add(Back);
+        grid.add(SuBox, 0, 5);
 //////************************************* |
         //*****************************************
     Button SRegist = new Button("Stop registration");
